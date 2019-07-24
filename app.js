@@ -28,3 +28,4 @@ app.use(errorController.get404Error)
 
 
 app.listen(30001);
+console.log("Listening on PORT:30001")
