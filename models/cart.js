@@ -28,7 +28,7 @@ module.exports = class Cart {
             }
             // Add new product or increase qty
             cart.totalPrice = cart.totalPrice + +productPrice
-            fs.writeFile(p, JSON.stringify(cart), (err)=>{
+            fs.writeFile(p, JSON.stringify(cart), (err) => {
                 console.log(err)
             })
             
@@ -58,7 +58,7 @@ module.exports = class Cart {
     }
 
     static getCart(cb){
-        fs.readFile(p, (err, fileContent)=> {
+        fs.readFile(p, (err, fileContent) => {
             const cart = JSON.parse(fileContent)
             if(err){
                 cb(null)
