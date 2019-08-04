@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 
 const errorController = require('./controllers/error');
-const db = require('./util/database')
+const sequelize = require('./util/database')
 
 const app = express();
 
@@ -14,13 +14,13 @@ app.set('views', 'views');
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
-db.execute('SELECT * FROM products')
-    .then(result => {
-        console.log(result[0]);
-    })
-    .catch(err => {
-        console.log(err);
-    });
+// db.execute('SELECT * FROM products')
+//     .then(result => {
+//         console.log(result[0]);
+//     })
+//     .catch(err => {
+//         console.log(err);
+//     });
 
 app.use(bodyParser.urlencoded({extended: false}));
 
@@ -35,6 +35,11 @@ app.use(shopRoutes);
 // Catch All Middleware - 404 Page Error Page
 app.use(errorController.get404Error)
 
-
-app.listen(30001);
-console.log("Listening on PORT:30001")
+sequelize.sync()
+    .then(result => {
+        app.listen(30001);
+        console.log("Listening on PORT:30001")
+    })
+    .catch(err => {
+        console.log(err);
+    })
